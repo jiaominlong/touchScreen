@@ -10,7 +10,12 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {}
+    proxyTable: {
+      '/touchscreen/company/**': {
+        target: 'http://172.17.12.38:90', // 接口名称
+        secure: false,
+        changeOrigin: false,
+      }
     },
 
     // Various Dev Server settings
