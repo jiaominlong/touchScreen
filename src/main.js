@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import 'vue2-animate/dist/vue2-animate.min.css'
 // 引用API文件
 import api from './api/index'
 // 将API文件绑定到全局

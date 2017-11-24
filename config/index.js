@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/touchscreen/company/**': {
-        target: 'http://172.17.12.38:90', // 接口名称
+        target: 'http://58.210.145.74:90', // 接口名称
         secure: false,
         changeOrigin: false,
       }
