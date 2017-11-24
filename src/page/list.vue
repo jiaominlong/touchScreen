@@ -10,7 +10,7 @@
             <ul class="type">
               <li><i>经营类型：</i><span>{{ com.businessModelName }}</span></li>
               <li><i>主营产品：</i><span>{{ com.mainProduct }}</span></li>
-              <li><i>档口位置：</i><span>{{ com.newStoreAddress }}</span></li>
+              <li><i>档口位置1：</i><span>{{ com.newStoreAddress }}</span></li>
             </ul>
           </div>
           <ul class="member">
