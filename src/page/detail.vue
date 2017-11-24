@@ -2,42 +2,71 @@
   <div class="detail">
     <Header></Header>
     <div class="detail-wrap">
-      <div class="com-title">常熟市服装城维春服装商行</div>
+      <div class="com-title">{{ company.comName }}</div>
       <div class="com-info">
         <div class="com-big-img"></div>
         <div class="com-sumarry">
-          公司十分重视产品质量和售后服务，一直本着“以人为本、以诚取信、以质取胜、以新争天下”的质量方针和“正正直直做人，踏踏实实做事”的企业精神。公司十分重视产品质量和售后服务，一直本着“以人为本、以诚取信、以质取胜、以新争天下”的质量方针和“正正直直做人，踏踏实实做事”的企业精神。我们将与您精诚合作，共创辉煌的业绩！热忱欢迎全国各地的客户前来洽谈业务...
+          {{ company.comDescription }}
         </div>
         <div class="com-img">
           <div class="com-img-title">公司相册</div>
           <ul class="com-img-arr">
-            <li></li>
-            <li></li>
+            <li v-for = 'img in company.comPhotoURLList'>
+              <img v-bind:scr="img" alt="">
+            </li>
           </ul>
         </div>
+        <!--认证信息无意义-->
+        <!--<div class="com-authen">-->
+          <!--<div class="com-authen-title">认证信息</div>-->
+          <!--<div class="com-authen-info">-->
+            <!--<ul class="com-authen-info-left">-->
+              <!--<li>-->
+                <!--<span>公司名称：</span>{{ company.comName }}-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<span>经营范围：</span>常熟市服装城魏春商行-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<span>经营模式：</span>常熟市服装城魏春商行-->
+              <!--</li>-->
+            <!--</ul>-->
+            <!--<ul class="com-authen-info-right">-->
+              <!--<li>-->
+                <!--<span>成立时间：</span>常熟市服装城魏春商行-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<span>申 请 人：</span>常熟市服装城魏春商行-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<span>认证地址：</span>{{ company.creditModel.certAddress }}-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="com-authen">
-          <div class="com-authen-title">认证信息</div>
+          <div class="com-authen-title">公司信息</div>
           <div class="com-authen-info">
             <ul class="com-authen-info-left">
               <li>
-                <span>公司名称：</span>常熟市服装城魏春商行
+                <span>公司名称：</span>{{ company.comName }}
               </li>
               <li>
-                <span>经营范围：</span>常熟市服装城魏春商行
+                <span>公司电话：</span>{{ company.comTel }}
               </li>
               <li>
-                <span>经营模式：</span>常熟市服装城魏春商行
+                <span>公司地址：</span>{{ company.comAddressName }}
               </li>
             </ul>
             <ul class="com-authen-info-right">
               <li>
-                <span>成立时间：</span>常熟市服装城魏春商行
+                <span>主营产品：</span>{{ company.mainProduct }}
               </li>
               <li>
-                <span>申 请 人：</span>常熟市服装城魏春商行
+                <span>经营品牌：</span>{{ company.brandName }}
               </li>
               <li>
-                <span>认证地址：</span>常熟市服装城魏春商行
+                <span>接单类型：</span>{{ company.orderTypeNameList[0] }}
               </li>
             </ul>
           </div>
@@ -47,13 +76,13 @@
           <div class="com-reg-info">
             <ul class="com-reg-info-left">
               <li>
-                <span>注 册 地 址：</span>常熟市服装城魏春商行
+                <span>注 册 地 址：</span>{{ company.creditModel.registerAddress }}
               </li>
               <li>
                 <span>成 立 时 间：</span>常熟市服装城魏春商行
               </li>
               <li>
-                <span>法定代表人：</span>常熟市服装城魏春商行
+                <span>法定代表人：</span>{{ company.creditModel.legalPerson }}
               </li>
               <li>
                 <span>企 业 类 型：</span>常熟市服装城魏春商行
@@ -81,7 +110,9 @@
             </ul>
           </div>
         </div>
-        <div class="go-back">返回列表页</div>
+        <router-link to='/list'>
+          <div class="go-back">返回列表页</div>
+        </router-link>
       </div>
     </div>
     <PopupPage></PopupPage>
@@ -92,6 +123,24 @@
   import Header from '../components/Header.vue'
   import PopupPage from '../components/PopupPage.vue'
   export default {
-    components: {Header, PopupPage}
+    components: {Header, PopupPage},
+    data () {
+      return {
+        id: this.$route.params.id,
+        company: {}
+      }
+    },
+    created () {
+      this.getCompany()
+    },
+    methods: {
+      getCompany: function () {
+        var that = this
+        that.loading = true
+        this.$api.get('/' + this.id, null, function (r) {
+          that.company = r.data
+        })
+      }
+    }
   }
 </script>

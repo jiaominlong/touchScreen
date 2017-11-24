@@ -1,12 +1,7 @@
 <template>
-  this is Index
+  <div class="index">
+    <router-link to='/list'>
+      <div class="enter-list"></div>
+    </router-link>
+  </div>
 </template>
-
-<script>
-
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>

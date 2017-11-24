@@ -1,5 +1,5 @@
 // 配置API接口地址
-var root = '/touchscreen/company'
+var root = 'http://172.17.12.38:90/touchscreen/company'
 // 引用axios
 var axios = require('axios')
 // 自定义判断元素类型JS
