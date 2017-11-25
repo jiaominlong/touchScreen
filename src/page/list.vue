@@ -58,8 +58,6 @@
       },
       getData: function (searchKey) {
         var that = this
-//        console.log(searchKey)
-//        此处this指向已经改变
         that.loading = true
         this.$api.get('search' + searchKey, null, function (r) {
           console.log(that.page, that.totalPage)

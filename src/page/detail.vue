@@ -79,33 +79,33 @@
                 <span>注 册 地 址：</span>{{ company.creditModel.registerAddress }}
               </li>
               <li>
-                <span>成 立 时 间：</span>常熟市服装城魏春商行
+                <span>成 立 时 间：</span>{{ company.creditModel.establishTime }}
               </li>
               <li>
                 <span>法定代表人：</span>{{ company.creditModel.legalPerson }}
               </li>
               <li>
-                <span>企 业 类 型：</span>常熟市服装城魏春商行
+                <span>企 业 类 型：</span>{{ company.creditModel.comType }}
               </li>
-              <li>
-                <span>年 检 时 间：</span>常熟市服装城魏春商行
-              </li>
+              <!--<li>-->
+                <!--<span>年 检 时 间：</span>{{ company.creditModel.annualSurveyTime }}-->
+              <!--</li>-->
             </ul>
             <ul class="com-reg-info-right">
               <li>
-                <span>注册资本：</span>常熟市服装城魏春商行
+                <span>注册资本：</span>{{ company.creditModel.registerCapital }}
               </li>
               <li>
-                <span>注 册 号：</span>常熟市服装城魏春商行
+                <span>注 册 号：</span>{{ company.creditModel.registerNo }}
               </li>
               <li>
-                <span>登记机关：</span>常熟市服装城魏春商行
+                <span>登记机关：</span>{{ company.creditModel.registerAuthority }}
               </li>
+              <!--<li>-->
+                <!--<span>营业期限：</span>{{ company.creditModel.businessTermStart }} 至 {{ company.creditModel.businessTermEnd }}-->
+              <!--</li>-->
               <li>
-                <span>营业期限：</span>常熟市服装城魏春商行
-              </li>
-              <li>
-                <span>经营范围：</span>常熟市服装城魏春商行
+                <span>经营范围：</span>{{ company.creditModel.businessScope }}
               </li>
             </ul>
           </div>
