@@ -41,14 +41,16 @@
         loading: false,
         urlParameter: '',
         page: 1,
-        totalPage: 0 // 此处需要调整
+        totalPage: 0, // 此处需要调整
+        currentUrlAvg: {},
+        localUrlPara: ''
       }
     },
     created () {
       this.getData('?current=' + this.page)
     },
     methods: {
-      parameterUrl: function (parameter) {
+      parameterUrlOld: function (parameter) {
         if (arguments.length !== 0) {
           for (var i in arguments) {
             this.urlParameter += arguments[i]
@@ -56,6 +58,43 @@
         }
         this.getData(this.urlParameter)
       },
+      // *************新组件添加开始**************
+      parameterUrl: function (urlObj) {
+        var id = urlObj.id
+        var type = urlObj.type
+        var newUrl = ''
+        if (this.isEmptyObject(this.currentUrlAvg)) {
+          newUrl = '?' + type + '=' + id
+        } else {
+          if (type === 'current') {
+            if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catecode === '' && this.currentUrlAvg.keyword === '') {
+              newUrl = '?current=' + id
+            } else if (this.currentUrlAvg.market !== '' && this.currentUrlAvg.catecode === '' && this.currentUrlAvg.keyword === '') {
+              newUrl = '?current=' + id + '&market=' + this.currentUrlAvg.market
+            } else if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catecode !== '' && this.currentUrlAvg.keyword === '') {
+              newUrl = '?current=' + id + '&catecode=' + this.currentUrlAvg.catecode
+            } else if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catecode === '' && this.currentUrlAvg.keyword !== '') {
+              newUrl = '?current=' + id + '&keyword=' + this.currentUrlAvg.keyword
+            }
+          } else if (type === 'market') {
+            newUrl = '?current=1&market=' + id
+          } else if (type === 'catecode') {
+            newUrl = '?current=1&catecode=' + id
+          } else if (type === 'keyword') {
+            newUrl = '?current=1&keyword=' + id
+          }
+        }
+        console.log(newUrl)
+      },
+
+      isEmptyObject: function (obj) {
+      // 判断对象是否为空
+        for (var key in obj) {
+          return false // 返回false，不为空对象
+        }
+        return true // 返回true，为空对象
+      },
+      // **************新组件添加结束**************/
       getData: function (searchKey) {
         var that = this
         that.loading = true
@@ -63,6 +102,13 @@
           console.log(that.page, that.totalPage)
           that.loading = false
           that.comList = r.data.list
+          that.currentUrlAvg = {
+            market: (r.data.result.market || ''),
+            catecode: (r.data.result.catecode || ''),
+            keyword: (r.data.result.keyword || ''),
+            current: (r.data.pageModel.current)
+          }
+          console.log(that.currentUrlAvg)
           that.totalPage = r.data.pageModel.total
         })
       }

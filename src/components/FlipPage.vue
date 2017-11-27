@@ -23,7 +23,7 @@
         } else {
           this.current += num
         }
-        this.callParameterUrl('?current=' + this.current)
+        this.callParameterUrl({type: 'current', id: this.current})
       },
       callParameterUrl: function (parameter) {
         this.$emit('splitParameter', parameter)
