@@ -4,7 +4,13 @@
     <div class="detail-wrap">
       <div class="com-title">{{ company.comName }}</div>
       <div class="com-info">
-        <div class="com-big-img"></div>
+        <div class="com-big-img vam">
+          <div class="vam-out">
+            <div class="vam-in">
+              <img alt="" v-for="img in company.comPhotoURLList" v-bind:src="img | modiImgSize('500', '600')">
+            </div>
+          </div>
+        </div>
         <div class="com-sumarry">
           {{ company.comDescription }}
         </div>
@@ -12,61 +18,37 @@
           <div class="com-img-title">公司相册</div>
           <ul class="com-img-arr">
             <li v-for = 'img in company.comPhotoURLList'>
-              <img v-bind:scr="img" alt="">
+              <div class="vam">
+                <div class="vam-out">
+                  <div class="vam-in"><img v-bind:src="img | modiImgSize('500', '600')" alt=""></div>
+                </div>
+              </div>
             </li>
           </ul>
         </div>
-        <!--认证信息无意义-->
-        <!--<div class="com-authen">-->
-          <!--<div class="com-authen-title">认证信息</div>-->
-          <!--<div class="com-authen-info">-->
-            <!--<ul class="com-authen-info-left">-->
-              <!--<li>-->
-                <!--<span>公司名称：</span>{{ company.comName }}-->
-              <!--</li>-->
-              <!--<li>-->
-                <!--<span>经营范围：</span>常熟市服装城魏春商行-->
-              <!--</li>-->
-              <!--<li>-->
-                <!--<span>经营模式：</span>常熟市服装城魏春商行-->
-              <!--</li>-->
-            <!--</ul>-->
-            <!--<ul class="com-authen-info-right">-->
-              <!--<li>-->
-                <!--<span>成立时间：</span>常熟市服装城魏春商行-->
-              <!--</li>-->
-              <!--<li>-->
-                <!--<span>申 请 人：</span>常熟市服装城魏春商行-->
-              <!--</li>-->
-              <!--<li>-->
-                <!--<span>认证地址：</span>{{ company.creditModel.certAddress }}-->
-              <!--</li>-->
-            <!--</ul>-->
-          <!--</div>-->
-        <!--</div>-->
         <div class="com-authen">
           <div class="com-authen-title">公司信息</div>
           <div class="com-authen-info">
             <ul class="com-authen-info-left">
               <li>
-                <span>公司名称：</span>{{ company.comName }}
+                <span>公司名称：</span>{{ company.comName | replacNull }}
               </li>
               <li>
-                <span>公司电话：</span>{{ company.comTel }}
+                <span>公司电话：</span>{{ (company.comTel === '') ? company.comMobile:company.comTel }}
               </li>
               <li>
-                <span>公司地址：</span>{{ company.comAddressName }}
+                <span>公司地址：</span>{{ company.comAddressName | replacNull }}
               </li>
             </ul>
             <ul class="com-authen-info-right">
               <li>
-                <span>主营产品：</span>{{ company.mainProduct }}
+                <span>主营产品：</span>{{ company.mainProduct | replacNull }}
               </li>
               <li>
-                <span>经营品牌：</span>{{ company.brandName }}
+                <span>经营品牌：</span>{{ company.brandName | replacNull }}
               </li>
               <li>
-                <span>接单类型：</span>{{ company.orderTypeNameList[0] }}
+                <span>接单类型：</span>{{ (company.orderTypeNameList === undefined) ? '--' : company.orderTypeNameList[0] }}
               </li>
             </ul>
           </div>
@@ -76,16 +58,16 @@
           <div class="com-reg-info">
             <ul class="com-reg-info-left">
               <li>
-                <span>注 册 地 址：</span>{{ company.creditModel.registerAddress }}
+                <span>注 册 地 址：</span>{{ company.creditModel.registerAddress | replacNull }}
               </li>
               <li>
-                <span>成 立 时 间：</span>{{ company.creditModel.establishTime }}
+                <span>成 立 时 间：</span>{{ company.creditModel.establishTime | replacNull }}
               </li>
               <li>
-                <span>法定代表人：</span>{{ company.creditModel.legalPerson }}
+                <span>法定代表人：</span>{{ company.creditModel.legalPerson | replacNull }}
               </li>
               <li>
-                <span>企 业 类 型：</span>{{ company.creditModel.comType }}
+                <span>企 业 类 型：</span>{{ company.creditModel.comType | replacNull }}
               </li>
               <!--<li>-->
                 <!--<span>年 检 时 间：</span>{{ company.creditModel.annualSurveyTime }}-->
@@ -93,19 +75,19 @@
             </ul>
             <ul class="com-reg-info-right">
               <li>
-                <span>注册资本：</span>{{ company.creditModel.registerCapital }}
+                <span>注册资本：</span>{{ company.creditModel.registerCapital | replacNull }}
               </li>
               <li>
-                <span>注 册 号：</span>{{ company.creditModel.registerNo }}
+                <span>注 册 号：</span>{{ company.creditModel.registerNo  | replacNull }}
               </li>
               <li>
-                <span>登记机关：</span>{{ company.creditModel.registerAuthority }}
+                <span>登记机关：</span>{{ company.creditModel.registerAuthority  | replacNull }}
               </li>
               <!--<li>-->
                 <!--<span>营业期限：</span>{{ company.creditModel.businessTermStart }} 至 {{ company.creditModel.businessTermEnd }}-->
               <!--</li>-->
               <li>
-                <span>经营范围：</span>{{ company.creditModel.businessScope }}
+                <span>经营范围：</span>{{ company.creditModel.businessScope  | replacNull }}
               </li>
             </ul>
           </div>
@@ -115,7 +97,7 @@
         </router-link>
       </div>
     </div>
-    <PopupPage></PopupPage>
+    <PopupPage v-on:subsearch="goSearch"></PopupPage>
   </div>
 </template>
 
@@ -140,6 +122,10 @@
         this.$api.get('/' + this.id, null, function (r) {
           that.company = r.data
         })
+      },
+      goSearch: function (obj) {
+        console.log(obj)
+        this.$router.push({path: '/list'})
       }
     }
   }

@@ -44,7 +44,7 @@
       return {
         numberMarket: 0,
         numberCate: 0,
-        searchKeyId: '',
+        searchKeyId: {},
         searchKeyWorld: '',
         selectMarket: '请选择商场',
         selectCate: '请选择品类',
@@ -101,9 +101,10 @@
       },
       submitSearch: function (type) {
         if (type === 1) {
-          this.$emit('subsearch', this.searchKeyId)
+          console.log(this.searchKeyId)
+          this.$emit('subsearch', {type: this.searchKeyId.type, id: this.searchKeyId.id})
         } else {
-          this.$emit('subsearch', '?keyword=' + this.searchKeyWorld)
+          this.$emit('subsearch', {type: 'keyword', id: this.searchKeyWorld})
           this.searchKeyWorld = ''
         }
         this.popup('none')
@@ -111,13 +112,13 @@
       toggleClass: function (target, index) {
         if (target === 'market') {
 //          组合url
-          this.searchKeyId = '?market=' + this.marketList[index].id
+          this.searchKeyId = {type: 'market', id: this.marketList[index].id}
           this.numberMarket = index
 //          更改搜索按钮文字
           this.toggleTitle(target, this.marketList[index].name)
         } else {
 //          组合Url
-          this.searchKeyId = '?catecode=' + this.cateList[index].id
+          this.searchKeyId = {type: 'catcode', id: this.cateList[index].id}
           this.numberCate = index
 //          更改搜索按钮文字
           this.toggleTitle(target, this.cateList[index].name)

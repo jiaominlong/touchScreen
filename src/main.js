@@ -11,6 +11,27 @@ Vue.prototype.$api = api
 
 Vue.config.productionTip = false
 
+// 过滤器1 过滤值为空
+Vue.filter('replacNull', function (value) {
+  console.log('已经进入空值过滤器了', value)
+  if (value === undefined || value === '') {
+    return '--'
+  } else {
+    return value
+  }
+})
+// 过滤器2 过滤图片大小
+Vue.filter('modiImgSize', function (value, size, targetSize) {
+  console.log('已经进入图片过滤器了', value, size)
+  var newsize = targetSize + 'x' + targetSize
+  if (value === undefined) {
+    return 'http://image.csfz.cn/product_pic/9bkk9k9ss9/' + newsize + '.jpg'
+  } else {
+    var str = size + 'x' + size
+    return value.replace(str, newsize)
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

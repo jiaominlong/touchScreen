@@ -7,7 +7,10 @@
           <router-link :to="'/detail/' + com.encodedCompanyId">
             <h1>{{com.comName}}</h1>
             <div class="summary">
-              <div class="img"><img v-bind:src="com.photoUrl"></div>
+              <div class="img vam">
+                <div class="vam-out">
+                  <div class="vam-in"><img v-bind:src="com.photoUrl | modiImgSize('200', '100') "></div></div>
+                </div>
               <ul class="type">
                 <li><i>经营类型：</i><span>{{ com.businessModelName }}</span></li>
                 <li><i>主营产品：</i><span>{{ com.mainProduct }}</span></li>
@@ -15,9 +18,9 @@
               </ul>
             </div>
             <ul class="member">
-              <li><span>{{ com.workerTotalAll }}人</span><i>用工人数</i></li>
+              <li><span>{{ com.workerTotalAll }}</span><i>用工人数</i></li>
               <li><span>{{ com.machineCount }}台</span><i>{{ com.machineName }}数</i></li>
-              <li><span>{{ com.output }}万</span><i>年生产值</i></li>
+              <li><span>{{ com.yearProduction | replacNull }}</span><i>年生产值</i></li>
             </ul>
           </router-link>
         </li>
@@ -25,7 +28,7 @@
     </div>
     <FilpPage v-bind:totalPage ='totalPage' v-on:splitParameter="parameterUrl"></FilpPage>
     <Loading v-if="loading"></Loading>
-    <PopupPage v-on:subsearch="getData"></PopupPage>
+    <PopupPage v-on:subsearch="parameterUrl"></PopupPage>
   </div>
 </template>
 <script>
@@ -60,6 +63,7 @@
       },
       // *************新组件添加开始**************
       parameterUrl: function (urlObj) {
+        console.log(urlObj, '穿入參數為他！')
         var id = urlObj.id
         var type = urlObj.type
         var newUrl = ''
@@ -67,24 +71,27 @@
           newUrl = '?' + type + '=' + id
         } else {
           if (type === 'current') {
-            if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catecode === '' && this.currentUrlAvg.keyword === '') {
+            if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catcode === '' && this.currentUrlAvg.keyword === '') {
               newUrl = '?current=' + id
-            } else if (this.currentUrlAvg.market !== '' && this.currentUrlAvg.catecode === '' && this.currentUrlAvg.keyword === '') {
+            } else if (this.currentUrlAvg.market !== '' && this.currentUrlAvg.catcode === '' && this.currentUrlAvg.keyword === '') {
               newUrl = '?current=' + id + '&market=' + this.currentUrlAvg.market
-            } else if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catecode !== '' && this.currentUrlAvg.keyword === '') {
-              newUrl = '?current=' + id + '&catecode=' + this.currentUrlAvg.catecode
-            } else if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catecode === '' && this.currentUrlAvg.keyword !== '') {
+              console.log(newUrl, 'market不为空')
+            } else if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catcode !== '' && this.currentUrlAvg.keyword === '') {
+              newUrl = '?current=' + id + '&catcode=' + this.currentUrlAvg.catcode
+              console.log(newUrl, 'catcode不为空')
+            } else if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catcode === '' && this.currentUrlAvg.keyword !== '') {
               newUrl = '?current=' + id + '&keyword=' + this.currentUrlAvg.keyword
             }
           } else if (type === 'market') {
             newUrl = '?current=1&market=' + id
-          } else if (type === 'catecode') {
-            newUrl = '?current=1&catecode=' + id
+          } else if (type === 'catcode') {
+            newUrl = '?current=1&catcode=' + id
           } else if (type === 'keyword') {
             newUrl = '?current=1&keyword=' + id
           }
         }
         console.log(newUrl)
+        this.getData(newUrl)
       },
 
       isEmptyObject: function (obj) {
@@ -99,16 +106,15 @@
         var that = this
         that.loading = true
         this.$api.get('search' + searchKey, null, function (r) {
-          console.log(that.page, that.totalPage)
           that.loading = false
           that.comList = r.data.list
           that.currentUrlAvg = {
             market: (r.data.result.market || ''),
-            catecode: (r.data.result.catecode || ''),
+            catcode: (r.data.result.catcode || ''),
             keyword: (r.data.result.keyword || ''),
             current: (r.data.pageModel.current)
           }
-          console.log(that.currentUrlAvg)
+          console.log(that.currentUrlAvg, '返回參數複製成功')
           that.totalPage = r.data.pageModel.total
         })
       }
