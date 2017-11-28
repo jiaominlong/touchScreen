@@ -115,7 +115,6 @@
     },
     created () {
       this.getCompany()
-      this.timingGoIndex()
     },
     methods: {
       getCompany: function () {
@@ -128,12 +127,6 @@
       },
       goSearch: function (obj) {
         this.$router.push({path: '/list', query: obj})
-      },
-      timingGoIndex: function () {
-        var that = this
-        that.clock = setTimeout(function () {
-          that.$router.push({path: '/index'})
-        }, 300000)
       }
     }
   }
