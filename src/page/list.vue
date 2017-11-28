@@ -46,7 +46,8 @@
         page: 1,
         totalPage: 0, // 此处需要调整
         currentUrlAvg: {},
-        localUrlPara: ''
+        localUrlPara: '',
+        clock: null
       }
     },
     created () {
@@ -55,6 +56,7 @@
       } else {
         this.parameterUrl(this.$route.query)
       }
+      this.timingGoIndex()
     },
     methods: {
       parameterUrlOld: function (parameter) {
@@ -94,8 +96,9 @@
             newUrl = '?current=1&keyword=' + id
           }
         }
-        console.log(newUrl)
         this.getData(newUrl)
+        clearTimeout(this.clock)
+        this.timingGoIndex()
       },
 
       isEmptyObject: function (obj) {
@@ -121,6 +124,12 @@
           console.log(that.currentUrlAvg, '返回參數複製成功')
           that.totalPage = r.data.pageModel.total
         })
+      },
+      timingGoIndex: function () {
+        var that = this
+        that.clock = setTimeout(function () {
+          that.$router.push({path: '/index'})
+        }, 300000)
       }
     }
   }
