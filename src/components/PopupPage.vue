@@ -10,10 +10,10 @@
           <ul class="select-item cate" v-if="display.cateshow">
             <li v-for='(item,index) in cateList' v-on:click="toggleClass('cate',index)" :class='{hover:index === numberCate}'>{{ item.name }}</li>
           </ul>
-          <ul class="select-handle">
-            <li class="submit" v-on:click="submitSearch(1)"></li>
-            <li class="cancel" v-on:click="popup('none')"></li>
-          </ul>
+          <!--<ul class="select-handle">-->
+            <!--<li class="submit" v-on:click="submitSearch(1)"></li>-->
+            <!--<li class="cancel" v-on:click="popup('none')"></li>-->
+          <!--</ul>-->
         </div>
       </div>
     </div>
@@ -116,12 +116,14 @@
           this.numberMarket = index
 //          更改搜索按钮文字
           this.toggleTitle(target, this.marketList[index].name)
+          this.submitSearch(1)
         } else {
 //          组合Url
           this.searchKeyId = {type: 'catcode', id: this.cateList[index].id}
           this.numberCate = index
 //          更改搜索按钮文字
           this.toggleTitle(target, this.cateList[index].name)
+          this.submitSearch(1)
         }
       },
       toggleTitle: function (target, name) {

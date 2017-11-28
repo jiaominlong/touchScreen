@@ -234,16 +234,15 @@ a {
   }
   .select-item{
     overflow: hidden;
-    width: 815px;
-    float: left;
+    width: 970px;
   }
   .select-item li{
     float: left;
-    width: 248px;
+    width: 200px;
     height: 58px;
     border: 1px solid #fff;
     border-radius: 5px;
-    margin-right: 20px;
+    margin-right: 40px;
     margin-bottom: 20px;
     font-size: 24px;
     font-weight: 100;
@@ -255,22 +254,22 @@ a {
     background-color: #fff;
     color: #1888e7;
   }
-  .select-handle{
-    float: right;
-  }
-  .select-handle .submit{
-    height: 60px;
-    width: 120px;
-    margin-bottom: 20px;
-    background-image: url(assets/submit.jpg);
-    box-shadow: 0px 0px 8px #555;
-  }
-  .select-handle .cancel{
-    height: 60px;
-    width: 120px;
-    background-image: url(assets/cancel.jpg);
-    box-shadow: 0px 0px 8px #555;
-  }
+  //.select-handle{
+  //  float: right;
+  //}
+  //.select-handle .submit{
+  //  height: 60px;
+  //  width: 120px;
+  //  margin-bottom: 20px;
+  //  background-image: url(assets/submit.jpg);
+  //  box-shadow: 0px 0px 8px #555;
+  //}
+  //.select-handle .cancel{
+  //  height: 60px;
+  //  width: 120px;
+  //  background-image: url(assets/cancel.jpg);
+  //  box-shadow: 0px 0px 8px #555;
+  //}
 }
 //arr style
 .ico_arr{
