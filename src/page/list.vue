@@ -50,7 +50,11 @@
       }
     },
     created () {
-      this.getData('?current=' + this.page)
+      if (this.isEmptyObject(this.$route.query)) {
+        this.getData('?current=' + this.page)
+      } else {
+        this.parameterUrl(this.$route.query)
+      }
     },
     methods: {
       parameterUrlOld: function (parameter) {

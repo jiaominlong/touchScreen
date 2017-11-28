@@ -53,7 +53,7 @@
           cateshow: false,
           alpha: false
         },
-        marketList: [{name: '全部', id: 100},
+        marketList: [{name: '全部', id: ''},
           {name: '天虹服装城', id: 0},
           {name: '服装城服饰广场', id: 1},
           {name: '招商场', id: 2},
@@ -69,7 +69,7 @@
           {name: '中国男装中心', id: 14},
           {name: '中国时装中心', id: 15}
         ],
-        cateList: [{name: '全部', id: 100},
+        cateList: [{name: '全部', id: ''},
           {name: '男装', id: 1},
           {name: '女装', id: 2},
           {name: '童装', id: 3},

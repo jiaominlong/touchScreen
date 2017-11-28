@@ -4,7 +4,7 @@
     <div class="detail-wrap">
       <div class="com-title">{{ company.comName }}</div>
       <div class="com-info">
-        <div class="com-big-img vam">
+        <div class="com-big-img vam" v-if="company.comPhotoURLList">
           <div class="vam-out">
             <div class="vam-in">
               <img alt="" v-for="img in company.comPhotoURLList" v-bind:src="img | modiImgSize('500', '600')">
@@ -14,8 +14,8 @@
         <div class="com-sumarry">
           {{ company.comDescription }}
         </div>
-        <div class="com-img">
-          <div class="com-img-title">公司相册</div>
+        <div class="com-img" v-if="company.comPhotoURLList">
+          <div class="com-img-title">公司相片</div>
           <ul class="com-img-arr">
             <li v-for = 'img in company.comPhotoURLList'>
               <div class="vam">
@@ -34,7 +34,7 @@
                 <span>公司名称：</span>{{ company.comName | replacNull }}
               </li>
               <li>
-                <span>公司电话：</span>{{ (company.comTel === '') ? company.comMobile:company.comTel }}
+                <span>公司电话：</span>{{ ((company.comTel === '') ? company.comMobile:company.comTel) | replacNull }}
               </li>
               <li>
                 <span>公司地址：</span>{{ company.comAddressName | replacNull }}
@@ -48,7 +48,7 @@
                 <span>经营品牌：</span>{{ company.brandName | replacNull }}
               </li>
               <li>
-                <span>接单类型：</span>{{ (company.orderTypeNameList === undefined) ? '--' : company.orderTypeNameList[0] }}
+                <span>接单类型：</span>{{ (company.orderTypeNameList === undefined) ? '--' : company.orderTypeNameList }}
               </li>
             </ul>
           </div>
@@ -58,16 +58,16 @@
           <div class="com-reg-info">
             <ul class="com-reg-info-left">
               <li>
-                <span>注 册 地 址：</span>{{ company.creditModel.registerAddress | replacNull }}
+                <span>注 册 地 址：</span>{{ creditModel.registerAddress | replacNull }}
               </li>
               <li>
-                <span>成 立 时 间：</span>{{ company.creditModel.establishTime | replacNull }}
+                <span>成 立 时 间：</span>{{ creditModel.establishTime | replacNull }}
               </li>
               <li>
-                <span>法定代表人：</span>{{ company.creditModel.legalPerson | replacNull }}
+                <span>法定代表人：</span>{{ creditModel.legalPerson | replacNull }}
               </li>
               <li>
-                <span>企 业 类 型：</span>{{ company.creditModel.comType | replacNull }}
+                <span>企 业 类 型：</span>{{ creditModel.comType | replacNull }}
               </li>
               <!--<li>-->
                 <!--<span>年 检 时 间：</span>{{ company.creditModel.annualSurveyTime }}-->
@@ -75,19 +75,19 @@
             </ul>
             <ul class="com-reg-info-right">
               <li>
-                <span>注册资本：</span>{{ company.creditModel.registerCapital | replacNull }}
+                <span>注册资本：</span>{{ creditModel.registerCapital | replacNull }}
               </li>
               <li>
-                <span>注 册 号：</span>{{ company.creditModel.registerNo  | replacNull }}
+                <span>注 册 号：</span>{{ creditModel.registerNo  | replacNull }}
               </li>
               <li>
-                <span>登记机关：</span>{{ company.creditModel.registerAuthority  | replacNull }}
+                <span>登记机关：</span>{{ creditModel.registerAuthority  | replacNull }}
               </li>
               <!--<li>-->
                 <!--<span>营业期限：</span>{{ company.creditModel.businessTermStart }} 至 {{ company.creditModel.businessTermEnd }}-->
               <!--</li>-->
               <li>
-                <span>经营范围：</span>{{ company.creditModel.businessScope  | replacNull }}
+                <span>经营范围：</span>{{ creditModel.businessScope  | replacNull }}
               </li>
             </ul>
           </div>
@@ -109,7 +109,8 @@
     data () {
       return {
         id: this.$route.params.id,
-        company: {}
+        company: {},
+        creditModel: {}
       }
     },
     created () {
@@ -121,11 +122,11 @@
         that.loading = true
         this.$api.get('/' + this.id, null, function (r) {
           that.company = r.data
+          that.creditModel = r.data.creditModel || {}
         })
       },
       goSearch: function (obj) {
-        console.log(obj)
-        this.$router.push({path: '/list'})
+        this.$router.push({path: '/list', query: obj})
       }
     }
   }

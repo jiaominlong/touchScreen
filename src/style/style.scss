@@ -312,6 +312,10 @@ a {
     height: 400px;
     margin: 0 auto;
     font-size: 0;
+    img{
+      max-width: 600px;
+      max-height: 400px;
+    }
   }
   .com-sumarry{
     height: 140px;
