@@ -1,5 +1,8 @@
 @import "base/normalize";
 //页面背景框架
+::-webkit-scrollbar {
+  width: 0px;
+}
 a {
   text-decoration: none;
 }
@@ -27,6 +30,9 @@ a {
   height: 149px;
   padding-top: 51px;
   text-align: center;
+  background-image: url(assets/csfzc_logo.png);
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 //list style

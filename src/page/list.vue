@@ -1,6 +1,6 @@
 <template>
     <div class="list">
-      <Header></Header>
+      <vHeader></vHeader>
       <div class="com-list-wrap">
         <ul class="com-list" v-if="!loading">
           <li class="com-item" v-for="com in comList">
@@ -32,12 +32,12 @@
     </div>
 </template>
 <script>
-  import Header from '../components/Header.vue'
+  import vHeader from '../components/Header.vue'
   import Loading from '../components/Loading.vue'
   import FilpPage from '../components/FlipPage.vue'
   import PopupPage from '../components/PopupPage.vue'
   export default {
-    components: { Header, Loading, FilpPage, PopupPage },
+    components: { vHeader, Loading, FilpPage, PopupPage },
     data () {
       return {
         comList: {},
@@ -69,7 +69,6 @@
       },
       // *************新组件添加开始**************
       parameterUrl: function (urlObj) {
-        console.log(urlObj, '穿入參數為他！')
         var id = urlObj.id
         var type = urlObj.type
         var newUrl = ''
@@ -81,10 +80,10 @@
               newUrl = '?current=' + id
             } else if (this.currentUrlAvg.market !== '' && this.currentUrlAvg.catcode === '' && this.currentUrlAvg.keyword === '') {
               newUrl = '?current=' + id + '&market=' + this.currentUrlAvg.market
-              console.log(newUrl, 'market不为空')
+//              console.log(newUrl, 'market不为空')
             } else if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catcode !== '' && this.currentUrlAvg.keyword === '') {
               newUrl = '?current=' + id + '&catcode=' + this.currentUrlAvg.catcode
-              console.log(newUrl, 'catcode不为空')
+//              console.log(newUrl, 'catcode不为空')
             } else if (this.currentUrlAvg.market === '' && this.currentUrlAvg.catcode === '' && this.currentUrlAvg.keyword !== '') {
               newUrl = '?current=' + id + '&keyword=' + this.currentUrlAvg.keyword
             }
@@ -121,14 +120,13 @@
             keyword: (r.data.result.keyword || ''),
             current: (r.data.pageModel.current)
           }
-          console.log(that.currentUrlAvg, '返回參數複製成功')
           that.totalPage = r.data.pageModel.total
         })
       },
       timingGoIndex: function () {
         var that = this
         that.clock = setTimeout(function () {
-          that.$router.push({path: '/index'})
+          that.$router.push({path: '/'})
         }, 360000)
       }
     }

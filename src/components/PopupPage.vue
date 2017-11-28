@@ -101,7 +101,7 @@
       },
       submitSearch: function (type) {
         if (type === 1) {
-          console.log(this.searchKeyId)
+//          console.log(this.searchKeyId)
           this.$emit('subsearch', {type: this.searchKeyId.type, id: this.searchKeyId.id})
         } else {
           this.$emit('subsearch', {type: 'keyword', id: this.searchKeyWorld})

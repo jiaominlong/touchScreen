@@ -1,6 +1,6 @@
 <template>
   <div class="detail">
-    <Header></Header>
+    <vHeader></vHeader>
     <div class="detail-wrap">
       <div class="com-title">{{ company.comName }}</div>
       <div class="com-info">
@@ -102,10 +102,10 @@
 </template>
 
 <script>
-  import Header from '../components/Header.vue'
+  import vHeader from '../components/Header.vue'
   import PopupPage from '../components/PopupPage.vue'
   export default {
-    components: {Header, PopupPage},
+    components: {vHeader, PopupPage},
     data () {
       return {
         id: this.$route.params.id,
