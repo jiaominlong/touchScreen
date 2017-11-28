@@ -48,7 +48,7 @@
                 <span>经营品牌：</span>{{ company.brandName | replacNull }}
               </li>
               <li>
-                <span>接单类型：</span>{{ (company.orderTypeNameList === undefined) ? '--' : company.orderTypeNameList }}
+                <span>接单类型：</span>{{ (company.orderTypeNameList === undefined) ? '--' : company.orderTypeNameList[0] }}
               </li>
             </ul>
           </div>

@@ -1,35 +1,35 @@
 <template>
-  <div class="list">
-    <Header></Header>
-    <div class="com-list-wrap">
-      <ul class="com-list" v-if="!loading">
-        <li class="com-item" v-for="com in comList">
-          <router-link :to="'/detail/' + com.encodedCompanyId">
-            <h1>{{com.comName}}</h1>
-            <div class="summary">
-              <div class="img vam">
-                <div class="vam-out">
-                  <div class="vam-in"><img v-bind:src="com.photoUrl | modiImgSize('200', '100') "></div></div>
-                </div>
-              <ul class="type">
-                <li><i>经营类型：</i><span>{{ com.businessModelName }}</span></li>
-                <li><i>主营产品：</i><span>{{ com.mainProduct }}</span></li>
-                <li><i>档口位置：</i><span>{{ com.newStoreAddress }}</span></li>
+    <div class="list">
+      <Header></Header>
+      <div class="com-list-wrap">
+        <ul class="com-list" v-if="!loading">
+          <li class="com-item" v-for="com in comList">
+            <router-link :to="'/detail/' + com.encodedCompanyId">
+              <h1>{{com.comName}}</h1>
+              <div class="summary">
+                <div class="img vam">
+                  <div class="vam-out">
+                    <div class="vam-in"><img v-bind:src="com.photoUrl | modiImgSize('200', '100') "></div></div>
+                  </div>
+                <ul class="type">
+                  <li><i>经营类型：</i><span>{{ com.businessModelName }}</span></li>
+                  <li><i>主营产品：</i><span>{{ com.mainProduct }}</span></li>
+                  <li><i>档口位置：</i><span>{{ com.newStoreAddress }}</span></li>
+                </ul>
+              </div>
+              <ul class="member">
+                <li><span>{{ com.workerTotalAll }}</span><i>用工人数</i></li>
+                <li><span>{{ com.machineCount }}台</span><i>{{ com.machineName }}数</i></li>
+                <li><span>{{ com.yearProduction | replacNull }}</span><i>年生产值</i></li>
               </ul>
-            </div>
-            <ul class="member">
-              <li><span>{{ com.workerTotalAll }}</span><i>用工人数</i></li>
-              <li><span>{{ com.machineCount }}台</span><i>{{ com.machineName }}数</i></li>
-              <li><span>{{ com.yearProduction | replacNull }}</span><i>年生产值</i></li>
-            </ul>
-          </router-link>
-        </li>
-      </ul>
+            </router-link>
+          </li>
+        </ul>
+      </div>
+      <FilpPage v-bind:totalPage ='totalPage' v-on:splitParameter="parameterUrl"></FilpPage>
+      <Loading v-if="loading"></Loading>
+      <PopupPage v-on:subsearch="parameterUrl"></PopupPage>
     </div>
-    <FilpPage v-bind:totalPage ='totalPage' v-on:splitParameter="parameterUrl"></FilpPage>
-    <Loading v-if="loading"></Loading>
-    <PopupPage v-on:subsearch="parameterUrl"></PopupPage>
-  </div>
 </template>
 <script>
   import Header from '../components/Header.vue'
